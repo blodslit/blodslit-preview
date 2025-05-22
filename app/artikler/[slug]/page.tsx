@@ -1,12 +1,20 @@
 // app/artikler/[slug]/page.tsx
 
-type PageProps = {
+import { Metadata } from 'next'
+
+type Props = {
   params: {
     slug: string
   }
 }
 
-export default function ArticlePage({ params }: PageProps) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  return {
+    title: `Artikkel: ${params.slug}`,
+  }
+}
+
+export default async function ArticlePage({ params }: Props) {
   return (
     <main className="prose mx-auto p-8">
       <h1>Forhåndsvisning av artikkel: {params.slug}</h1>
