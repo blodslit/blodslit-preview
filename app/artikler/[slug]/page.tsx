@@ -1,10 +1,15 @@
 // app/artikler/[slug]/page.tsx
+import { type Metadata } from 'next'
+
 export const dynamic = 'force-dynamic'
-export default function ArticlePage({
-  params,
-}: {
-  params: { slug: string }
-}) {
+
+type PageProps = {
+  params: {
+    slug: string
+  }
+}
+
+export default function ArticlePage({ params }: PageProps) {
   return (
     <main className="prose mx-auto p-8">
       <h1>Forhåndsvisning av artikkel: {params.slug}</h1>
