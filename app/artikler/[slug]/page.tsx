@@ -1,12 +1,12 @@
 // app/artikler/[slug]/page.tsx
 
-type Props = {
+type PageProps = {
   params: {
     slug: string
   }
 }
 
-export default function ArticlePage({ params }: Props) {
+export default function ArticlePage({ params }: PageProps) {
   const { slug } = params
 
   return (
