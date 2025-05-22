@@ -1,15 +1,9 @@
 // app/artikler/[slug]/page.tsx
 
-export const dynamic = 'force-dynamic'
-
-export default function ArticlePage({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export default function ArticlePage(props: { params: { slug: string } }) {
   return (
     <main className="prose mx-auto p-8">
-      <h1>Forhåndsvisning av artikkel: {params.slug}</h1>
+      <h1>Forhåndsvisning av artikkel: {props.params.slug}</h1>
       <p>Her kommer innholdet fra Sanity etter hvert.</p>
     </main>
   )
