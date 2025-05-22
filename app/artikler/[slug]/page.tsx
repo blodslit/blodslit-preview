@@ -1,23 +1,12 @@
 // app/artikler/[slug]/page.tsx
 
-import { type Metadata } from 'next'
-import { type FC } from 'react'
+export const dynamic = 'force-dynamic'
 
-// eksplisitt props-type fra Next.js
-type PageProps = {
-  params: {
-    slug: string
-  }
-}
-
-// optional: SEO-støtte
-export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
-  return {
-    title: `Artikkel: ${params.slug}`,
-  }
-}
-
-const ArticlePage: FC<PageProps> = ({ params }) => {
+export default function ArticlePage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   return (
     <main className="prose mx-auto p-8">
       <h1>Forhåndsvisning av artikkel: {params.slug}</h1>
@@ -25,5 +14,3 @@ const ArticlePage: FC<PageProps> = ({ params }) => {
     </main>
   )
 }
-
-export default ArticlePage
