@@ -1,6 +1,12 @@
 // app/artikler/[slug]/page.tsx
 
-export default function ArticlePage({ params }) {
+type PageProps = {
+  params: {
+    slug: string
+  }
+}
+
+export default function ArticlePage({ params }: PageProps) {
   return (
     <main className="prose mx-auto p-8">
       <h1>Forhåndsvisning av artikkel: {params.slug}</h1>
