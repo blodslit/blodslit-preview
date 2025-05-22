@@ -1,5 +1,4 @@
 // app/artikler/[slug]/page.tsx
-import { type Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
