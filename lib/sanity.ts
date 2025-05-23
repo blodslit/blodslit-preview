@@ -1,13 +1,14 @@
 // lib/sanity.ts
-import { createClient } from "@sanity/client"
+import { createClient } from 'next-sanity'
 
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: "2023-01-01",
-  useCdn: false,
+  projectId: process.env.SANITY_PROJECT_ID!, // Garanterer at variabelen finnes
+  dataset: process.env.SANITY_DATASET!,      // Garanterer at variabelen finnes
+  useCdn: true,
+  apiVersion: '2023-01-01',
 })
 
+// Henter én artikkel basert på slug
 export async function getArticleBySlug(slug: string) {
   return await client.fetch(
     `*[_type == "article" && slug.current == $slug][0]{
@@ -18,7 +19,8 @@ export async function getArticleBySlug(slug: string) {
   )
 }
 
+// Henter alle slugs for artikler
 export async function getAllArticleSlugs(): Promise<string[]> {
-  const data = await client.fetch(`*[_type == "article" && defined(slug.current)][].slug.current`)
-  return data
+  const slugs = await client.fetch(`*[_type == "article" && defined(slug.current)][].slug.current`)
+  return Array.isArray(slugs) ? slugs : []
 }
