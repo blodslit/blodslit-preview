@@ -1,7 +1,5 @@
-// app/artikler/[slug]/page.tsx
-
-import { notFound } from 'next/navigation'
-import { getArticleBySlug, fetchAllArticleSlugs } from '@/lib/sanity'
+import { notFound } from "next/navigation"
+import { getArticleBySlug, getAllArticleSlugs } from "@/app/lib/sanity"
 
 type PageProps = {
   params: {
@@ -19,15 +17,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="prose mx-auto p-8">
       <h1>{article.title}</h1>
-      <p>{article.description}</p>
+      <div>{article.content}</div>
     </main>
   )
 }
 
 export async function generateStaticParams() {
-  const slugs = await fetchAllArticleSlugs()
-
-  return slugs.map((slug) => ({
+  const slugs = await getAllArticleSlugs()
+  return slugs.map((slug: string) => ({
     slug,
   }))
 }
