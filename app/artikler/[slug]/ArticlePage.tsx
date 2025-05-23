@@ -1,6 +1,5 @@
-// app/artikler/[slug]/ArticlePage.tsx
 import { notFound } from "next/navigation";
-import { getArticleBySlug, getAllArticleSlugs } from "@/lib/sanity";
+import { getArticleBySlug, getAllArticleSlugs } from "../../../lib/sanity";
 
 type Props = {
   params: {
