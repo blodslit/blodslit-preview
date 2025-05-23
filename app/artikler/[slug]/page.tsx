@@ -1,13 +1,11 @@
 // app/artikler/[slug]/page.tsx
+import React from 'react'
 import { notFound } from 'next/navigation'
-import { getArticleBySlug, fetchAllArticleSlugs } from '@/lib/sanity'
-import { PortableText } from '@portabletext/react'
+import { getArticleBySlug } from '@/lib/sanity'
 
-type PageProps = {
-  params: { slug: string }
-}
+export const dynamic = 'force-dynamic'
 
-export default async function ArticlePage({ params }: PageProps) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const article = await getArticleBySlug(params.slug)
 
   if (!article) {
@@ -17,13 +15,7 @@ export default async function ArticlePage({ params }: PageProps) {
   return (
     <main className="prose mx-auto p-8">
       <h1>{article.title}</h1>
-      {article.ingress && <p className="text-xl text-gray-600">{article.ingress}</p>}
-      {article.content && <PortableText value={article.content} />}
+      <p>{article.excerpt}</p>
     </main>
   )
-}
-
-export async function generateStaticParams() {
-  const slugs = await fetchAllArticleSlugs()
-  return slugs.map((slug: string) => ({ slug }))
 }
