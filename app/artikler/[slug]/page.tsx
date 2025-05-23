@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { notFound } from 'next/navigation'
-import { getArticleBySlug, getAllArticleSlugs } from '@/lib/sanity'
+import { getArticleBySlug, getAllArticleSlugs } from '../../../lib/sanity'
 
-export default async function Page(props: any) {
-  const { slug } = props.params
+type Props = {
+  params: {
+    slug: string
+  }
+}
 
-  const article = await getArticleBySlug(slug)
+export default async function Page({ params }: Props) {
+  const article = await getArticleBySlug(params.slug)
 
   if (!article) {
     notFound()
