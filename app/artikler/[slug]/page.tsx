@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { getArticleBySlug, getAllArticleSlugs } from "@/app/lib/sanity"
+import { getArticleBySlug, getAllArticleSlugs } from "@/lib/sanity"
 
 type PageProps = {
   params: {
