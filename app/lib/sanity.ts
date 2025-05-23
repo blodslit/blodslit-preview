@@ -1,21 +1,36 @@
 // lib/sanity.ts
-import { createClient } from '@sanity/client'
+import { createClient } from 'next-sanity'
 
-export const sanityClient = createClient({
-  projectId: process.env.SANITY_PROJECT_ID,
-  dataset: process.env.SANITY_DATASET,
-  apiVersion: process.env.SANITY_API_VERSION || '2023-05-03',
+export const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  apiVersion: '2023-01-01',
   useCdn: false,
-  token: process.env.SANITY_TOKEN,
 })
 
-export async function getArticleBySlug(slug: string) {
-  const query = `*[_type == "article" && slug.current == $slug][0]`
-  const params = { slug }
-  return await sanityClient.fetch(query, params)
+type Article = {
+  _id: string
+  title: string
+  slug: {
+    current: string
+  }
+  // legg til mer her hvis du henter mer data
 }
 
-export async function fetchAllArticleSlugs(): Promise<string[]> {
-  const query = `*[_type == "article" && defined(slug.current)][].slug.current`
-  return await sanityClient.fetch(query)
+export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  return client.fetch(
+    `*[_type == "article" && slug.current == $slug][0]`,
+    { slug }
+  )
+}
+
+export async function fetchAllArticleSlugs(): Promise<{ slug: string }[]> {
+  const articles = await client.fetch<Article[]>(
+    `*[_type == "article" && defined(slug.current)]{ slug }`
+  )
+
+  return articles
+    .map((article) => article.slug?.current)
+    .filter(Boolean)
+    .map((slug) => ({ slug }))
 }
