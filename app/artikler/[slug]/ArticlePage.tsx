@@ -1,17 +1,17 @@
-import { notFound } from "next/navigation";
-import { getArticleBySlug, getAllArticleSlugs } from "../../../lib/sanity";
+import { notFound } from 'next/navigation'
+import { getArticleBySlug } from '@/lib/sanity'
 
 type Props = {
   params: {
-    slug: string;
-  };
-};
+    slug: string
+  }
+}
 
 export default async function ArticlePage({ params }: Props) {
-  const article = await getArticleBySlug(params.slug);
+  const article = await getArticleBySlug(params.slug)
 
   if (!article) {
-    notFound();
+    notFound()
   }
 
   return (
@@ -19,10 +19,5 @@ export default async function ArticlePage({ params }: Props) {
       <h1>{article.title}</h1>
       <div>{article.content}</div>
     </main>
-  );
-}
-
-export async function generateStaticParams() {
-  const slugs = await getAllArticleSlugs();
-  return slugs.map((slug) => ({ slug }));
+  )
 }
