@@ -1,5 +1,4 @@
 // app/artikler/[slug]/page.tsx
-import { Metadata } from 'next'
 
 type Props = {
   params: {
@@ -7,15 +6,8 @@ type Props = {
   }
 }
 
-export async function generateStaticParams() {
-  // Midlertidig tom – du kan hente faktiske slugs fra Sanity her senere
-  return []
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  return {
-    title: `Artikkel: ${params.slug}`,
-  }
+export async function generateStaticParams(): Promise<Props['params'][]> {
+  return [] // Du kan hente faktiske slugs fra Sanity her senere
 }
 
 export default function ArticlePage({ params }: Props) {
