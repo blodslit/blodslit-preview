@@ -1,16 +1,16 @@
 // app/artikler/[slug]/page.tsx
 
-type Props = {
-  params: {
-    slug: string
-  }
+export async function generateStaticParams() {
+  return [
+    { slug: 'test-artikkel' }, // Dummy slug, erstatt senere med fetch fra Sanity
+  ]
 }
 
-export async function generateStaticParams(): Promise<Props['params'][]> {
-  return [] // Du kan hente faktiske slugs fra Sanity her senere
-}
-
-export default function ArticlePage({ params }: Props) {
+export default function ArticlePage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   return (
     <main className="prose mx-auto p-8">
       <h1>Forhåndsvisning av artikkel: {params.slug}</h1>
