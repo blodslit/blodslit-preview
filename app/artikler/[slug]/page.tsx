@@ -1,10 +1,14 @@
 import { notFound } from 'next/navigation'
 import { getArticleBySlug } from '@/lib/sanityClient'
 
-export default async function Page(props: Promise<{ params: { slug: string | string[] } }>) {
-  const { params } = await props
-  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug
-  const cleanSlug = slug.replace(/^\//, '')
+type Props = {
+  params: {
+    slug: string
+  }
+}
+
+export default async function Page({ params }: Props) {
+  const cleanSlug = params.slug.replace(/^\//, '')
   const article = await getArticleBySlug(cleanSlug)
 
   if (!article) {
