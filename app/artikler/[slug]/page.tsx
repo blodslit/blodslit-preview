@@ -1,13 +1,14 @@
+// app/artikler/[slug]/page.tsx
+
 import { notFound } from 'next/navigation'
-import { getArticleBySlug, getAllArticleSlugs } from '../../../lib/sanity'
+import { getArticleBySlug } from '../../../lib/sanity'
+import { generateStaticParams } from './generateStaticParams'
 
-type Props = {
-  params: {
-    slug: string
-  }
-}
-
-export default async function Page({ params }: Props) {
+export default async function Page({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const article = await getArticleBySlug(params.slug)
 
   if (!article) {
@@ -22,7 +23,5 @@ export default async function Page({ params }: Props) {
   )
 }
 
-export async function generateStaticParams() {
-  const slugs = await getAllArticleSlugs()
-  return slugs.map((slug: string) => ({ slug }))
-}
+// 👇 OBS: Importert fra egen fil, ikke skrevet inline
+export { generateStaticParams }
