@@ -1,10 +1,7 @@
 // app/artikler/[slug]/generateStaticParams.ts
+import { getAllArticleSlugs } from '@/lib/sanityClient'
 
-import { getAllArticleSlugs } from '../../../lib/sanity'
-
-export async function generateStaticParams(): Promise<
-  { slug: string }[]
-> {
+export async function generateStaticParams() {
   const slugs = await getAllArticleSlugs()
-  return slugs.map((slug) => ({ slug }))
+  return slugs.map(slug => ({ slug }))
 }

@@ -1,15 +1,11 @@
-// app/artikler/[slug]/page.tsx
-
 import { notFound } from 'next/navigation'
-import { getArticleBySlug } from '../../../lib/sanity'
-import { generateStaticParams } from './generateStaticParams'
+import { getArticleBySlug } from '@/lib/sanityClient'
 
-export default async function Page({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const article = await getArticleBySlug(params.slug)
+export default async function Page(props: Promise<{ params: { slug: string | string[] } }>) {
+  const { params } = await props
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug
+  const cleanSlug = slug.replace(/^\//, '')
+  const article = await getArticleBySlug(cleanSlug)
 
   if (!article) {
     notFound()
@@ -22,6 +18,3 @@ export default async function Page({
     </main>
   )
 }
-
-// 👇 OBS: Importert fra egen fil, ikke skrevet inline
-export { generateStaticParams }
